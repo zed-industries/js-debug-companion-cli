@@ -82,7 +82,7 @@ async function main() {
       return;
     }
 
-    if (req.method !== 'GET') {
+    if (req.method !== 'POST') {
       res.writeHead(405, { 'Content-Type': 'text/plain' });
       res.end('Method not allowed');
       return;
