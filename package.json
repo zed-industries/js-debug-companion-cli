@@ -1,47 +1,22 @@
 {
-  "name": "js-debug-companion",
-  "displayName": "JavaScript Debugger Companion Extension",
-  "description": "Companion extension to js-debug that provides capability for remote debugging",
-  "version": "1.1.3",
-  "publisher": "ms-vscode",
-  "engines": {
-    "vscode": "^1.90.0"
-  },
-  "icon": "resources/logo.png",
+  "name": "@zed-industries/js-debug-companion-cli",
+  "displayName": "JavaScript Debugger Companion CLI",
+  "description": "Companion CLI for js-debug for remote browser debugging",
+  "version": "0.1.0",
   "categories": [
     "Other"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/microsoft/vscode-js-debug-companion.git"
+    "url": "https://github.com/zed-industries/js-debug-companion-cli"
   },
-  "author": "Connor Peet <connor@peet.io>",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/microsoft/vscode-js-debug-companion/issues"
-  },
-  "homepage": "https://github.com/microsoft/vscode-js-debug-companion#readme",
-  "capabilities": {
-    "virtualWorkspaces": false,
-    "untrustedWorkspaces": {
-      "supported": true
-    }
-  },
-  "activationEvents": [
-    "onCommand:js-debug-companion.launchAndAttach",
-    "onCommand:js-debug-companion.kill",
-    "onCommand:js-debug-companion.launch",
-    "onCommand:js-debug-companion.defaultBrowser"
-  ],
+  "homepage": "https://github.com/zed-industries/js-debug-companion-cli#readme",
   "main": "./out/cli.js",
-  "contributes": {},
-  "extensionKind": [
-    "ui"
-  ],
-  "api": "none",
   "scripts": {
-    "vscode:prepublish": "rimraf out && node .esbuild.js --minify",
+    "prepublish": "rimraf out && node .esbuild.js --minify",
     "compile": "node .esbuild.js --minify",
+    "cli": "node .esbuild.js --minify && node out/cli.js",
     "watch": "node .esbuild.js --watch",
     "test": "tsc --noEmit && npm run test:lint && npm run test:fmt",
     "test:lint": "eslint \"src/**/*.ts\"",
@@ -62,7 +37,6 @@
     "@types/mocha": "^10.0.7",
     "@types/node": "^20.14.9",
     "@types/split2": "^4.2.3",
-    "@types/vscode": "^1.90.0",
     "@types/ws": "^8.5.10",
     "esbuild": "^0.25.0",
     "eslint": "^8.57.0",
@@ -73,7 +47,6 @@
   },
   "dependencies": {
     "@vscode/js-debug-browsers": "^1.1.2",
-    "default-browser": "^5.2.1",
     "duplexer3": "^1.0.0",
     "execa": "^5.1.1",
     "split2": "^4.2.0",
