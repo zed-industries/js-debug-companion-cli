@@ -7,7 +7,6 @@ import {
   EdgeBrowserFinder,
   FirefoxBrowserFinder,
   IBrowserFinder,
-  IExecutable,
   isQuality,
 } from '@vscode/js-debug-browsers';
 import { spawn } from 'child_process';

@@ -196,7 +196,7 @@ const makeNetSocketFromDuplexStream = (stream: Duplex): Socket => {
       callback?.();
       return cast;
     },
-  };
+  } as any;
 
   return Object.assign(stream, patched) as Socket;
 };
