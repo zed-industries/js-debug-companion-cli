@@ -1,4 +1,21 @@
-# js-debug-companion
+# js-debug-companion-cli
+
+This is a fork of the original [vscode-js-debug-companion](https://github.com/microsoft/vscode-js-debug-companion) project, which allows running the same code as a standalone process instead of a VS Code extension. It's used by [Zed](https://zed.dev) to support browser debugging in SSH and WSL projects.
+
+The CLI is launched as follows:
+
+```bash
+node out/cli.js --listen=localhost:3000 --state=/path/to/state/dir
+```
+
+This launches a process that will listen for HTTP requests on the specified address. There are two endpoints:
+
+- `POST /launch-and-attach`: Corresponds to the VS Code `js-debug-companion.launchAndAttach` command.
+- `POST /kill`: Corresponds to the VS Code `js-debug-companion.kill` command.
+
+The body for each request should be the same JSON payload that's provided to the corresponding command by vscode-js-debug. The process can handle launching and killing multiple browsers during its lifetime.
+
+## Original vscode-js-debug-companion README
 
 A companion extension to [js-debug](https://github.com/microsoft/vscode-js-debug) to enable remote Chrome debugging. You probably don't want to install this extension by itself, but for your interest, this is what it does.
 

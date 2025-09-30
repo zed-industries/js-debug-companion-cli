@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "module": "ESNext",
+    "moduleResolution": "node",
     "target": "ES2022",
     "outDir": "out",
     "lib": ["ES2023"],
@@ -12,5 +13,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUnusedParameters": true
   },
-  "exclude": ["node_modules", ".vscode-test"]
+  "exclude": ["node_modules", ".vscode-test", "test"]
 }
