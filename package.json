@@ -16,12 +16,12 @@
   "scripts": {
     "prepublish": "rimraf out && node .esbuild.js --minify",
     "compile": "node .esbuild.js --minify",
-    "cli": "node .esbuild.js --minify && node out/cli.js",
+    "cli": "npm run compile && node out/cli.js",
     "watch": "node .esbuild.js --watch",
-    "test": "tsc --noEmit && npm run test:lint && npm run test:fmt",
-    "test:lint": "eslint \"src/**/*.ts\"",
-    "test:fmt": "prettier --list-different \"src/**/*.ts\"",
-    "fmt": "prettier --write \"src/**/*.ts\"&& npm run test:lint -- --fix"
+    "test": "tsc --noEmit && npm run test:lint && mocha && npm run test:fmt",
+    "test:lint": "eslint \"src/**/*.ts\" \"test/**/*.ts\"",
+    "test:fmt": "prettier --list-different \"src/**/*.ts\" \"test/**/*.ts\"",
+    "fmt": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" && npm run test:lint -- --fix"
   },
   "prettier": {
     "trailingComma": "all",
@@ -40,8 +40,10 @@
     "@types/ws": "^8.5.10",
     "esbuild": "^0.25.0",
     "eslint": "^8.57.0",
+    "mocha": "^11.7.3",
     "prettier": "^3.3.2",
     "rimraf": "^5.0.7",
+    "tsx": "^4.20.6",
     "typescript": "^5.5.3",
     "typescript-eslint": "^7.15.0"
   },

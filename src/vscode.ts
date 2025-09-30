@@ -55,15 +55,20 @@ class MutableToken implements CancellationToken {
 
 export class CancellationTokenSource implements Disposable {
   private _token: MutableToken | undefined;
+  private _isCancelled: boolean = false;
 
   public get token(): CancellationToken {
     if (!this._token) {
       this._token = new MutableToken();
+      if (this._isCancelled) {
+        this._token.cancel();
+      }
     }
     return this._token;
   }
 
   public cancel(): void {
+    this._isCancelled = true;
     if (this._token) {
       this._token.cancel();
     }
