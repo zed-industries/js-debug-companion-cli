@@ -13,8 +13,19 @@
   "license": "MIT",
   "homepage": "https://github.com/zed-industries/js-debug-companion-cli#readme",
   "main": "./out/cli.js",
+  "bin": {
+    "js-debug-companion-cli": "./out/cli.js"
+  },
+  "files": [
+    "out/cli.js",
+    "LICENSE",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
-    "prepublish": "rimraf out && node .esbuild.js --minify",
+    "prepublishOnly": "rimraf out && node .esbuild.js --minify",
     "compile": "node .esbuild.js --minify",
     "cli": "npm run compile && node out/cli.js",
     "watch": "node .esbuild.js --watch",
