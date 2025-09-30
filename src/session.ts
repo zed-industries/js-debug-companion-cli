@@ -8,9 +8,9 @@ import { Agent } from 'http';
 import { Socket } from 'net';
 import { Duplex } from 'stream';
 import { URL } from 'url';
-import { Disposable, EventEmitter } from 'vscode';
+import { Disposable, EventEmitter } from './vscode';
 import WebSocket from 'ws';
-import { IWslInfo } from './extension';
+import { IWslInfo } from './cli';
 import { ITarget } from './target';
 
 class MessageQueue<T> {

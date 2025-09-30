@@ -14,15 +14,13 @@ import { spawn } from 'child_process';
 import execa from 'execa';
 import { promises as fs } from 'fs';
 import { join } from 'path';
-import * as vscode from 'vscode';
 import { UserError } from './errors';
-import { ILaunchParams } from './extension';
+import { ILaunchParams } from './cli';
 import { exists } from './fs';
 import { PipedTarget, ServerTarget } from './target';
 
 const debugPortPrefix = '--remote-debugging-port=';
 const debugPipeArg = '--remote-debugging-port=';
-const availableBrowserKey = 'availableBrowsers_';
 
 export class BrowserSpawner {
   private readonly finders = {
@@ -31,10 +29,7 @@ export class BrowserSpawner {
     firefox: new FirefoxBrowserFinder(process.env, fs, execa),
   };
 
-  constructor(
-    private readonly storagePath: string,
-    private readonly context: vscode.ExtensionContext,
-  ) {}
+  constructor(private readonly storagePath: string) {}
 
   private async findBrowserPath(type: 'edge' | 'chrome' | 'firefox', runtimeExecutable: string) {
     if (runtimeExecutable !== '*' && !isQuality(runtimeExecutable)) {
@@ -45,9 +40,7 @@ export class BrowserSpawner {
       throw new UserError(`Browser type "${type}" is not supported.`);
     }
 
-    const available =
-      this.context.globalState.get<IExecutable[]>(availableBrowserKey + type) ||
-      (await this.finders[type].findAll());
+    const available = await this.finders[type].findAll();
 
     const resolved =
       runtimeExecutable === '*'
@@ -55,28 +48,16 @@ export class BrowserSpawner {
         : available.find(r => r.quality === runtimeExecutable);
 
     if (!resolved) {
-      await this.context.globalState.update(availableBrowserKey + type, undefined);
-
       if (runtimeExecutable === /* Quality.Stable */ 'stable' && !available.length) {
         throw new UserError(
-          vscode.l10n.t(
-            'Unable to find a {0} installation on your system. Try installing it, or providing an absolute path to the browser in the "runtimeExecutable" in your launch.json.',
-            type,
-          ),
+          `Unable to find a ${type} installation on your system. Try installing it, or providing an absolute path to the browser in the "runtimeExecutable" in your launch.json.`,
         );
       } else {
         throw new UserError(
-          vscode.l10n.t(
-            'Unable to find {0} version {1}. Available auto-discovered versions are: {2}. You can set the "runtimeExecutable" in your launch.json to one of these, or provide an absolute path to the browser executable.',
-            type,
-            runtimeExecutable,
-            JSON.stringify([...new Set(available)]),
-          ),
+          `Unable to find ${type} version ${runtimeExecutable}. Available auto-discovered versions are: ${JSON.stringify([...new Set(available)])}. You can set the "runtimeExecutable" in your launch.json to one of these, or provide an absolute path to the browser executable.`,
         );
       }
     }
-
-    await this.context.globalState.update(availableBrowserKey + type, available);
 
     return resolved.path;
   }
@@ -130,7 +111,7 @@ export class BrowserSpawner {
       detached: true,
       stdio: 'ignore',
     }).on('error', err => {
-      vscode.window.showErrorMessage(`Error running browser: ${err.message || err.stack}`);
+      console.error(`Error running browser: ${err.message || err.stack}`);
     });
   }
 

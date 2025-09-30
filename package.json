@@ -33,7 +33,7 @@
     "onCommand:js-debug-companion.launch",
     "onCommand:js-debug-companion.defaultBrowser"
   ],
-  "main": "./out/extension.js",
+  "main": "./out/cli.js",
   "contributes": {},
   "extensionKind": [
     "ui"

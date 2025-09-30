@@ -4,7 +4,7 @@
 
 import { ChildProcess } from 'child_process';
 import split from 'split2';
-import { CancellationTokenSource, Event, EventEmitter } from 'vscode';
+import { CancellationTokenSource, Event, EventEmitter } from './vscode';
 import WebSocket from 'ws';
 import { retryGetWSEndpoint } from './getWsEndpoint';
 
@@ -148,7 +148,10 @@ export class ServerTarget implements ITarget {
     }
   }
 
-  protected constructor(private readonly process: ChildProcess, private readonly attach: ITarget) {
+  protected constructor(
+    private readonly process: ChildProcess,
+    private readonly attach: ITarget,
+  ) {
     process.on('error', e => this.errorEmitter.fire(e));
     process.on('close', () => this.closeEmitter.fire());
     attach.onError(err => this.errorEmitter.fire(err));

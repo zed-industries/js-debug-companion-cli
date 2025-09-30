@@ -4,7 +4,7 @@
 
 import * as http from 'http';
 import { resolve as resolveUrl, URL } from 'url';
-import { CancellationToken, Disposable } from 'vscode';
+import { CancellationToken, Disposable } from './vscode';
 
 /**
  * Attempts to retrieve the debugger websocket URL for a process listening

@@ -2,9 +2,8 @@
  * Copyright (C) Microsoft Corporation. All rights reserved.
  *--------------------------------------------------------*/
 
-import * as vscode from 'vscode';
-import { Disposable } from 'vscode';
-import { ILaunchParams } from './extension';
+import { Disposable } from './vscode';
+import { ILaunchParams } from './cli';
 import { Session } from './session';
 import { BrowserSpawner } from './spawn';
 import { AttachTarget } from './target';
@@ -22,7 +21,7 @@ export class SessionManager implements Disposable {
     this.sessions.set(params.launchId, session);
     session.onClose(() => this.sessions.delete(params.launchId));
     session.onError(err => {
-      vscode.window.showErrorMessage(`Error running browser: ${err.message || err.stack}`);
+      console.error(`Error running browser: ${err.message || err.stack}`);
       this.sessions.delete(params.launchId);
     });
 
