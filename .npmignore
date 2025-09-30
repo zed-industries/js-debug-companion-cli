@@ -1,0 +1,28 @@
+# Source files
+src/
+test/
+
+# Build configuration
+.esbuild.js
+tsconfig.json
+eslint.config.mjs
+.mocharc.json
+
+# IDE and editor files
+.vscode/
+.github/
+.vscodeignore
+
+# Development files
+.gitignore
+*.map
+
+# Dependencies
+node_modules/
+
+# Test artifacts
+.vscode-test/
+
+# Package artifacts
+*.vsix
+*.tgz

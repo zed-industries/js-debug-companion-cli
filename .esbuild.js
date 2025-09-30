@@ -6,6 +6,9 @@ const minify = watch ? process.argv.includes('--minify') : !process.argv.include
 const ctx = esbuild.context({
   entryPoints: ['src/cli.ts'],
   tsconfig: './tsconfig.json',
+  banner: {
+    js: '#!/usr/bin/env node',
+  },
   bundle: true,
   external: [],
   sourcemap: !minify,
